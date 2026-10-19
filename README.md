@@ -7,13 +7,13 @@ The current handout asks you to configure, build, commission, inspect, and test 
 ## Requirements
 
 - The laboratory ESP32-C6 board, with its RGB LED on GPIO 8 and BOOT button on GPIO 9.
-- The course ESP-IDF installation (the teacher build uses ESP-IDF 6.0.1), ESP-IDF VS Code extension, and the matching prepared ESP-Matter SDK.
-- Linux, macOS, or the course Windows + WSL environment. For WSL, use the instructor's USB attachment procedure before flashing.
+- The ESP-IDF 6.0.1, the ESP-IDF VS Code extension, and the matching prepared ESP-Matter SDK.
+- Windows + WSL environment. 
 - A phone with SmartLife and access to the laboratory network. Use the account, permissions, and network settings provided by the instructor; app screens vary by version.
 
-The ESP-Matter SDK is not downloaded by cloning this repository. Use the course installer/setup instructions rather than an arbitrary newer SDK revision.
+The ESP-Matter SDK is not downloaded by cloning this repository.
 
-## Open and Build
+## Open and build
 
 Clone the student project next to the prepared SDK:
 
@@ -36,27 +36,27 @@ git clone https://github.com/die-diot/esp32c6_matter_light.git
 
 `main/Kconfig.projbuild` defines options, `sdkconfig.defaults*` supplies the shared baseline, and generated `sdkconfig` stores your local choices. Do not edit generated configuration by hand or commit it. The compiler creates `build/config/sdkconfig.h` with the corresponding `CONFIG_*` macros.
 
-CMake resolves the adjacent SDK and its prepared Pigweed environment and propagates those paths to Ninja/GN. An existing `ESP_MATTER_PATH` can select another prepared SDK. Do not copy a teacher's absolute paths or virtual environment into this project. WSL/USB operation still needs to be checked on the laboratory machines.
+CMake resolves the adjacent SDK and its prepared Pigweed environment and propagates those paths to Ninja/GN. An existing `ESP_MATTER_PATH` can select another prepared SDK. Do not copy a teacher's absolute paths or virtual environment into this project.
 
 If a terminal build is needed, activate the course ESP-IDF and ESP-Matter environments first. The normal student workflow is the ESP-IDF extension, not a copied local `build/` folder.
 
-## Your Phase 1 Activities
+## Your Phase 1 activities
 
-| Slides | Activity | Where to work or inspect |
-| --- | --- | --- |
-| 1-3 | Open the project, identify the dependency manifest and the C/C++ boundary, and trace the application startup. | `main/idf_component.yml`, `main/main.c`, `components/` |
-| 4-5 | Explain the configuration files; calculate and configure your own station identity through the SDK Configuration Editor. | `main/Kconfig.projbuild`, generated `sdkconfig` |
-| 6-7 | Build the firmware and prepare the phone while it builds. | ESP-IDF extension and SmartLife |
-| 8-9 | Flash, record your own setup payload, commission the board, and identify commissioning events. | Serial monitor and SmartLife |
-| 10 | Test phone control and a short BOOT press; compare physical LED behavior, app state, and serial events. | `main/main.c`, `diot_matter_toggle_light()`, serial monitor |
-| 11 | Explain the difference between an RGB emitter, its local FSM, and an advertised Matter light type. | `components/diot/diot_led.c`, `components/diot_matter/diot_matter_devices.cpp` |
-| 12 | Move the app controls, record the actual cluster/attribute trace, and find its handling branch. No extra log injection is needed. | `apply_attribute_update()` and serial monitor |
-| 13 | Inspect the initial color mode and the separately registered Hue/Saturation feature; identify the Hue attribute symbol from the code. | `create_light_device()`, `apply_attribute_update()` |
-| 14 | Hold BOOT for the configured long-press duration, release it, and record the actual factory-reset/reboot logs. | Board, serial monitor, SmartLife |
+|  Activity | Where to work or inspect |
+| --- | --- |
+| Open the project, identify the dependency manifest and the C/C++ boundary, and trace the application startup. | `main/idf_component.yml`, `main/main.c`, `components/` |
+| Explain the configuration files; calculate and configure your own station identity through the SDK Configuration Editor. | `main/Kconfig.projbuild`, generated `sdkconfig` |
+| Build the firmware and prepare the phone while it builds. | ESP-IDF extension and SmartLife |
+| Flash, record your own setup payload, commission the board, and identify commissioning events. | Serial monitor and SmartLife |
+| Test phone control and a short BOOT press; compare physical LED behavior, app state, and serial events. | `main/main.c`, `diot_matter_toggle_light()`, serial monitor |
+| Explain the difference between an RGB emitter, its local FSM, and an advertised Matter light type. | `components/diot/diot_led.c`, `components/diot_matter/diot_matter_devices.cpp` |
+| Move the app controls, record the actual cluster/attribute trace, and find its handling branch. No extra log injection is needed. | `apply_attribute_update()` and serial monitor |
+| Inspect the initial color mode and the separately registered Hue/Saturation feature; identify the Hue attribute symbol from the code. | `create_light_device()`, `apply_attribute_update()` |
+| Hold BOOT for the configured long-press duration, release it, and record the actual factory-reset/reboot logs. | Board, serial monitor, SmartLife |
 
-Use your own measurements, screenshots, and log excerpts. This repository does not include Moodle answer keys or a completed observation report. Use `.cpp` when a slide refers to the older `diot_matter_devices.c` filename. The handout's name remains the same; the implementation is C++ and is now named accordingly.
+Use your own measurements, screenshots, and log excerpts. This repository does not include Moodle answer keys or a completed observation report.
 
-## Code Map
+## Code map
 
 ```text
 main/main.c                         Application orchestration in C
@@ -75,7 +75,7 @@ The light driver has a single-state FSM with an update action. The C adapter sto
 
 Do not modify `managed_components/`, the shared SDK, or board wiring for these activities. Read the prepared C++ integration where requested; student application code remains C.
 
-## Reset and App Behavior
+## Reset and app behavior
 
 - **RST/EN:** reboots the board and normally preserves firmware and persistent Matter credentials.
 - **Short BOOT press:** toggles the light through its Matter attribute.
@@ -93,5 +93,3 @@ Hue/Saturation, XY, and white-temperature requests are converted to RGB. A WS281
 - **No BLE advertisement:** the board may already be commissioned. Follow the appropriate reset or sharing activity rather than repeatedly erasing flash.
 - **Pairing fails:** check the assigned identity, the phone's Bluetooth/network permissions, and the laboratory Wi-Fi instructions. Never add Wi-Fi credentials to source files or Git.
 - **Unexpected logs:** use the messages printed by your firmware/app version, not invented lines from an illustration. Keep setup payloads and account details out of public issues and screenshots.
-
-This project uses fixed laboratory/test commissioning data. It is teaching firmware, not a certified production device. No Wi-Fi password, user setup identity, generated build, teacher history, or personal VS Code theme is included.
