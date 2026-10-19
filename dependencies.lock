@@ -60,7 +60,7 @@ dependencies:
       type: service
     version: 2.7.0
   espressif/esp_secure_cert_mgr:
-    component_hash: 40a986c1f45d91eb6d339ca51dcab90c4ecce2a6622c268edaaa05887852d464
+    component_hash: 0b83e150f48d6839f0a0a8753850be55a51cc298cfca7658f21d355d5f41dd67
     dependencies:
     - name: idf
       require: private
@@ -68,7 +68,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com/
       type: service
-    version: 2.9.2
+    version: 2.9.3
   espressif/jsmn:
     component_hash: d80350c41bbaa827c98a25b6072df00884e72f54885996fab4a4f0aebce6b6c3
     dependencies:
@@ -133,6 +133,6 @@ direct_dependencies:
 - espressif/json_parser
 - espressif/led_strip
 - espressif/mdns
-manifest_hash: d895ddc8e97631b3b4148a0847ea049ec9bfd529d57fafaa4a06a1eb1c266e07
+manifest_hash: f383d8c781c4f3632b4cafc085332ca7847dcb3ca216e76aa33b0213aa18d827
 target: esp32c6
 version: 3.0.0

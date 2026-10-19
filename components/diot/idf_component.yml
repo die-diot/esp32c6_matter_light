@@ -1,0 +1,7 @@
+dependencies:
+  espressif/button:
+    version: "^4.1.0"
+    require: public
+  espressif/led_strip:
+    version: "^3.0.0"
+    require: public
