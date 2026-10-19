@@ -8,31 +8,40 @@ The current handout asks you to configure, build, commission, inspect, and test 
 
 - The laboratory ESP32-C6 board, with its RGB LED on GPIO 8 and BOOT button on GPIO 9.
 - The ESP-IDF 6.0.1, the ESP-IDF VS Code extension, and the matching prepared ESP-Matter SDK.
-- Windows + WSL environment. 
+- Windows + WSL environment.
 - A phone with SmartLife and access to the laboratory network. Use the account, permissions, and network settings provided by the instructor; app screens vary by version.
 
 The ESP-Matter SDK is not downloaded by cloning this repository.
 
 ## Open and build
 
-Clone the student project next to the prepared SDK:
+The ESP-Matter `~/esp/esp-matter` stack, is placed in the **Linux user's home directory**. This is not the Windows home directory or a folder under `/mnt/c`.
+
+Clone the project alongside that SDK, at `~/esp/esp32c6_matter_light`. The expected layout inside WSL is:
 
 ```text
-diot/
+~/esp/
+  esp-idf/
   esp-matter/
   esp32c6_matter_light/
 ```
 
-```bash
-git clone https://github.com/die-diot/esp32c6_matter_light.git
-```
+Clone the project using **VS Code**:
 
-1. Open `esp32c6_matter_light` in VS Code. On Windows, reopen it in the course WSL environment.
-2. Select the course ESP-IDF installation in the extension and set the target to **esp32c6**.
-3. Open **ESP-IDF: SDK Configuration Editor**, then **Example Configuration > DIOT Matter Provisioning**.
-4. Enter your assigned station BLE name and valid setup passcode using the slide naming convention. Leave the long-press duration at the instructed value. Save the configuration.
-5. Select **ESP-IDF: Build your project**. The first build downloads managed components and can take several minutes.
-6. Select the attached board's serial port, flash, and open the serial monitor using the extension. This repository does not choose a machine-specific serial port for you.
+1. Open VS Code on Windows.
+2. Press **F1** and run **WSL: Connect to WSL**.
+3. Press **F1** again, run **Git: Clone**, and paste this repository URL: `https://github.com/die-diot/esp32c6_matter_light.git`.
+4. When asked where to clone the repository, select `~/esp` inside WSL (for example, `/home/<linux-user>/esp`). VS Code will create the `esp32c6_matter_light` folder there. **Do not** select the Windows Desktop or a folder under `/mnt/c`.
+5. When cloning finishes, click **Open** to open the cloned project.
+6. Verify that the remote indicator in the **bottom-left corner** shows **WSL: Ubuntu** and that the open folder is `~/esp/esp32c6_matter_light`.
+
+Continue with configuration and build:
+
+1. Select the course ESP-IDF installation in the extension and set the target to **esp32c6**.
+2. Open **ESP-IDF: SDK Configuration Editor**, then **Example Configuration > DIOT Matter Provisioning**.
+3. Enter your assigned station BLE name and valid setup passcode using the slide naming convention. Leave the long-press duration at the instructed value. Save the configuration.
+4. Select **ESP-IDF: Build your project**. The first build downloads managed components and can take several minutes.
+5. Select the attached board's serial port, flash, and open the serial monitor using the extension. This repository does not choose a machine-specific serial port for you.
 
 `main/Kconfig.projbuild` defines options, `sdkconfig.defaults*` supplies the shared baseline, and generated `sdkconfig` stores your local choices. Do not edit generated configuration by hand or commit it. The compiler creates `build/config/sdkconfig.h` with the corresponding `CONFIG_*` macros.
 
