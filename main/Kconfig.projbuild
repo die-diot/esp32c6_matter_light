@@ -1,0 +1,40 @@
+menu "Example Configuration"
+
+    menu "DIOT Matter Provisioning"
+
+        config DIOT_MATTER_BLE_DEVICE_NAME
+            string "Matter BLE Device Name"
+            default "DIOT-Matter-C6"
+            help
+                Bluetooth device name advertised during commissioning.
+                This value is applied when Matter starts.
+
+        config DIOT_MATTER_SETUP_PIN_CODE
+            int "Matter Setup PIN Code"
+            range 1 99999998
+            default 20202021
+            help
+                Matter setup passcode (up to 8 decimal digits).
+                The value must be valid according to the Matter specification.
+
+    endmenu
+
+    menu "DIOT Button"
+
+        config DIOT_BUTTON_LONG_PRESS_TIME_MS
+            int "Button Long Press Time (ms)"
+            range 100 60000
+            default 5000
+            help
+                Minimum button hold duration in milliseconds for a long press.
+
+    endmenu
+
+    config ENABLE_MEMORY_PROFILING
+        bool "Enable Memory Profiling"
+        default n
+        help
+            Enable this option to include memory profiling features in the example.
+            This will allow you to monitor memory usage during runtime.
+
+endmenu
