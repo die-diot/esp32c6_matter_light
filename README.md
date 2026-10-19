@@ -95,6 +95,19 @@ Factory reset removes commissioning credentials but keeps the program. Do not re
 
 Hue/Saturation, XY, and white-temperature requests are converted to RGB. A WS2812 approximates white using RGB emitters; it is not a calibrated tunable-white lamp. App-specific White controls and grouping are not guaranteed by this firmware: record what actually happens. A serial `APP COMMAND` trace describes an attribute callback; it is not a packet capture or proof that every incoming command changed an attribute.
 
+## Before leaving the lab: take your code home
+
+Your project is stored inside the laboratory PC's WSL installation. It will not automatically appear on your home computer. Make a ZIP backup of your own work before leaving; no terminal commands are needed.
+
+1. In VS Code, select **File > Save All**.
+2. Press **Windows + E** to open Windows File Explorer. Enter `\\wsl$\` in its address bar, open the course Ubuntu distribution, and navigate through **home > your Linux username > esp > esp32c6_matter_light**.
+3. Enable **View > Show > Hidden items** (or **View > Hidden items** on Windows 10) so dotfolders such as `.vscode` are visible. Select the project contents, then hold **Ctrl** and deselect `build`, `managed_components`, and `.git` if present. Keep your source folders, `.vscode`, and the root project files, including your local `sdkconfig` if you want to preserve your station settings. Do not delete any folders from WSL.
+4. Create a folder named `esp32c6_matter_light_backup` in a Windows location you can access, such as Documents or your USB drive. **Copy**, do not move, the selected files from WSL into that folder. Do not copy the separate ESP-IDF or ESP-Matter SDK folders.
+5. Right-click the Windows backup folder and select **Compress to ZIP file**. On Windows 10, use **Send to > Compressed (zipped) folder**; on Windows 11 this option may also be under **Show more options**.
+6. Open the ZIP and check that it contains your edited files under `main` and `components`, plus `CMakeLists.txt` and the configuration files. Keep the ZIP on your USB drive or upload it to your personal university storage, and confirm that the copy/upload has completed. Keep your own screenshots and lab observations too, without exposing account details or setup codes.
+
+At home, the course ESP-IDF/ESP-Matter environment must also be installed. Extract the backup and copy the project back into `~/esp/esp32c6_matter_light` inside your home WSL distribution, next to `esp-matter`. Open it in VS Code connected to WSL and build again; do not reuse the laboratory PC's generated `build` directory or compile the Windows backup directly.
+
 ## Troubleshooting
 
 - **Pigweed environment not found:** the adjacent SDK is missing its prepared `.environment/build_overrides/pigweed_environment.gni`. Complete the course ESP-Matter setup; do not change a cluster handler to fix a build environment.
